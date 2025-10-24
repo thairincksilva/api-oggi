@@ -1,5 +1,21 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+// Liberar CORS para qualquer origem e aceitar os headers usados no webhook
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "api", "cnpj", "key", "hash", "distribuidor", "Accept", "Origin", "X-Requested-With"],
+    exposedHeaders: ["Content-Length"],
+    credentials: false,
+    optionsSuccessStatus: 204,
+  })
+);
+
+// Habilita preflight para todas as rotas
+app.options("*", cors());
 
 // Middleware para interpretar JSON no corpo das requisições
 app.use(express.json());
